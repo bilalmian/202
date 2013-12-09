@@ -1,0 +1,182 @@
+<html>
+<head>
+<script type ="application/javascript" language = "javascript">
+
+		var listen ="";
+		var timer = null;
+	
+		
+			function login(){
+			var xmlhttp =new XMLHttpRequest();
+			
+				var name = document.getElementById('uName').value;
+				var pass = document.getElementById('pass').value;
+				
+				xmlhttp.onreadystatechange = function(){
+				
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					
+						var result = JSON.parse(xmlhttp.responseText);
+						if(result.status == "Logged In") {
+							document.getElementById('uName').value = result.uname;
+							document.getElementById('uName').disabled = true;
+							document.getElementById('pass').value = "XXXXXXXXXXXXXXXX";
+							document.getElementById('pass').disabled = true;
+							document.getElementById('logStatus').style.color = "green";
+							document.getElementById('logStatus').innerHTML = "Login Successful";
+							document.getElementById('talk').value = result.content;
+							
+	
+						}else{
+								document.getElementById('logStatus').style.color = "red";
+							    document.getElementById('logStatus').innerHTML = "Login Failed";
+						
+						}
+					
+					}
+				
+				}
+				
+				xmlhttp.open("GET", "a4.php?active=logIn&uname="+name+"&pass="+pass, true);
+				xmlhttp.send();
+			
+			
+			}
+			
+			function updateListen(){
+			
+				listen = document.getElementById('chatName').value;
+				timer = setInterval(function() {updateContent()},3000);
+			
+			}
+			
+			
+		function updateContent(){
+			var xmlhttp =new XMLHttpRequest();
+			
+				
+				
+				xmlhttp.onreadystatechange = function(){
+				
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					
+						var result = JSON.parse(xmlhttp.responseText);
+						document.getElementById('listen').value = result.content;
+						
+						
+					}
+				
+				}
+				
+				xmlhttp.open("GET", "a4.php?active=getListen&listenTo="+listen, true);
+				xmlhttp.send();
+			
+			
+			}	
+			
+			
+			
+		function update(){
+		var xmlhttp =new XMLHttpRequest();
+			
+				var content = document.getElementById('talk').value;
+				var name = document.getElementById('uName').value;
+				
+				
+				
+				
+				
+				xmlhttp.open("GET", "a4.php?active=update&uname="+name+"&content="+content, true);
+				xmlhttp.send();
+			
+			
+			}
+			
+		function nameList(){
+			var xmlhttp =new XMLHttpRequest();
+			
+				
+				
+				xmlhttp.onreadystatechange = function(){
+				
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					
+						var result = JSON.parse(xmlhttp.responseText);
+						var users = result.name;
+						for (var i = 0; i < users.length; i++) {
+						
+										document.getElementById('chatList').innerHTML += users[i] + "<br>" ;
+    
+									}
+					
+					}
+				
+				}
+				
+				xmlhttp.open("GET", "a4.php?active=getUsers", true);
+				xmlhttp.send();
+		
+				
+		
+		
+		}	
+	
+
+
+
+
+</script>
+</head>
+<body>
+<center><h1>AJAX Chat Program </h1></center>
+
+
+<div style = "width:25%; margin: 0 auto; box-shadow: 10px 10px 5px #888888;">
+	<div id ="logStatus" name = "logStatus">
+	</div>
+	
+	<fieldset>
+
+		<input type ="text" id = "uName" name = "uName" /> Enter your user name <br>
+		<input type ="password" id = "pass" name = "pass" /> Enter your password<br>
+		<input type = "button" name = "logSub" id = "logSub" value = "Login" onClick = "login();" />
+		
+	</fieldset>
+</div>
+
+<br>
+<br>
+<br>
+
+<div style = "width:40%; float:left; ">
+	<fieldset>
+		<legend> Client </legend>
+
+		<textarea name = "talk" id = "talk" cols = "75" rows = "15" onkeyUp = "update();">
+		</textarea>
+		
+		
+	</fieldset>
+</div>
+
+
+<div style = "width:40%; float:right; ">
+	
+	<fieldset>
+		<legend> Listen </legend>
+	
+		<textarea name = "listen" id = "listen" cols = "75" rows = "15">
+		</textarea>
+		<input type "text" name = "chatName" id = "chatName" />
+		<input type = "submit" id = "lisSub" name = "lisSub" value = "Listen" onClick = "updateListen();" />
+	</fieldset>
+</div>
+<br>
+<center><h3 style = "clear:both">User List </h3></center>
+<script type ="application/javascript" language = "javascript"> nameList(); </script>
+<div id = "chatList" name = "chatList" style = "width:25%; margin: 0 auto; box-shadow: 10px 10px 5px #888888; clear:both">
+</div>
+
+
+</body>
+</html>

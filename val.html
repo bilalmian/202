@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+
+<form  action = "val.php">
+<div style = "border: solid black thin;
+			  width: 500px;
+			  margin:0px auto;">
+<fieldset>
+<legend> Enter Data </legend>
+<div name="error" id - "error">
+</div>
+<input type = "text" name = "ucid"
+auto-complete = "off" 
+autofocus
+	required title= "Must enter UCID"
+	placeholder = "Please enter UCID"
+	pattern = "[a-z]{2,3}[0-9]+"
+	id = "ucid"
+> UCID <br> 
+
+
+<input type = "password" name = "password"
+auto-complete = "off" 
+	required title= "Must contain upper case letter, lower case letter and a number "
+	pattern ="(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9#!]{4,8}"
+	id = "password"
+> Password ( <br>
+
+
+<input type = "email" name = "email"
+    title = "Enter valid Email address"
+	placeholder = "Please enter email"
+	id = "email"
+> Email <br>
+
+<select>
+</select><br>
+
+<input type = "text" name = "zip"
+	pattern =".{4,10}"
+	placeholder = "Please enter zipcode"
+	id = "zip"
+> ZipCode <br>
+
+<textarea id = "address" id = "address" rows="4" cols="50">
+
+
+
+
+</textarea>
+
+
+
+<input type = "submit" value = "submit" /> <br><br>
+
+
+
+</fieldset>
+</div>
+
+</form>
